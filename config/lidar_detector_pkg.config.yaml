@@ -1,0 +1,14 @@
+lidar_detector_node:
+  ros__parameters:
+
+    model_path: '/home/ros/late_fusion/src/lidar_detector_pkg/model/pointpillars_hv_secfpn_8xb6-160e_kitti-3d-3class.py'
+    weights_path: '/home/ros/late_fusion/src/lidar_detector_pkg/model/hv_pointpillars_secfpn_6x8_160e_kitti-3d-3class_20220301_150306-37dc2420.pth'
+    device: 'cuda:0'
+
+    point_cloud_topic: '/front_lidar/points'
+    bounding_box_topic: '/lidar_detector/detected_bounding_boxes'
+
+    image_input_topic: '/front_camera/image_raw'
+    calib_topic: '/camera/calibration'
+
+    image_publisher_topic: '/lidar_detector/image'
