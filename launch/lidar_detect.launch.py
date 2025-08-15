@@ -17,5 +17,13 @@ def generate_launch_description():
             executable='lidar_detector_node',
             name='lidar_detector_node',
             parameters=[config],
+            output='screen'
+        ),
+        Node(
+            package='lidar_detector_pkg',
+            executable='proyection_node',
+            name='proyection_node',
+            parameters=[config],
+            output='screen'
         )
     ])

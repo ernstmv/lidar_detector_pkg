@@ -23,7 +23,8 @@ setup(
         'setuptools',
         'numpy',
         'open3d',
-        'mmdet3d'
+        'mmdet3d',
+        'markerarraystamped'
         ],
     zip_safe=True,
     maintainer='user',
@@ -33,7 +34,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'lidar_detector_node = lidar_detector_pkg.lidar_detector_node:main'
+            'lidar_detector_node = lidar_detector_pkg.lidar_detector_node:main',
+            'proyection_node = lidar_detector_pkg.proyection_node:main'
         ],
     },
 )
