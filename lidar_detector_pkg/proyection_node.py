@@ -24,7 +24,7 @@ class ProyectionNode(Node):
 
         self.proyector = None
         self.bridge = CvBridge()
-        qos_profile = QoSProfile(reliability=ReliabilityPolicy.BEST_EFFORT, depth=1)
+        qos_profile = QoSProfile(reliability=ReliabilityPolicy.RELIABLE, depth=1)
 
         self.declare_parameter('calib_topic', '/camera/calibration')
         calib_topic = self.get_parameter('calib_topic').value
@@ -62,7 +62,6 @@ class ProyectionNode(Node):
         image_msg = self._np2imgmsg(output_img)
         
         self.image_publisher.publish(image_msg)
-        self.get_logger().info("Image published")
 
     def _imgmsg2np(self, img_msg: Image) -> np.ndarray:
         return self.bridge.imgmsg_to_cv2(img_msg, desired_encoding='bgr8')
@@ -117,7 +116,6 @@ class ProyectionNode(Node):
 
         marker_array = marker_array.markers
         if not marker_array.markers:
-            self.get_logger().warning("Empty MarkerArray received")
             return np.array([]).reshape(0, 8, 3)
         
         corners_list = []
@@ -125,7 +123,6 @@ class ProyectionNode(Node):
         for i, marker in enumerate(marker_array.markers):
             # Validate marker type (should be CUBE for bounding boxes)
             if marker.type != Marker.CUBE:
-                self.get_logger().warning(f"Marker {i} is not a CUBE (type={marker.type}), skipping")
                 continue
                 
             # Extract pose information
@@ -146,7 +143,6 @@ class ProyectionNode(Node):
             
             # Validate scale values
             if length <= 0 or width <= 0 or height <= 0:
-                self.get_logger().warning(f"Invalid scale for marker {i}: {length}, {width}, {height}")
                 continue
             
             # Calculate 8 corners of the bounding box
@@ -159,7 +155,6 @@ class ProyectionNode(Node):
             corners_list.append(corners)
         
         if not corners_list:
-            self.get_logger().warning("No valid CUBE markers found in MarkerArray")
             return np.array([]).reshape(0, 8, 3)
         
         # Convert to numpy array [n_objects, 8_corners, 3_coordinates]
@@ -225,7 +220,6 @@ class ProyectionNode(Node):
         # Normalize quaternion
         norm = np.sqrt(qx*qx + qy*qy + qz*qz + qw*qw)
         if norm == 0:
-            self.get_logger().warning("Zero quaternion norm, using identity rotation")
             return np.eye(3)
         
         qx, qy, qz, qw = qx/norm, qy/norm, qz/norm, qw/norm

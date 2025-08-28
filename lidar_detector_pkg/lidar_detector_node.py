@@ -18,7 +18,7 @@ class LidarDetectorNode(Node):
         super().__init__('lidar_detector_node')
 
         # Define QoS profile
-        qos_profile = QoSProfile(reliability=ReliabilityPolicy.BEST_EFFORT, depth=1)
+        qos_profile = QoSProfile(reliability=ReliabilityPolicy.RELIABLE, depth=1)
 
         # lidar subscription
         self.declare_parameter('pointcloud_topic', '/lidar/points')
@@ -89,6 +89,9 @@ class LidarDetectorNode(Node):
 
         for i, (bbox, label, score) in enumerate(zip(bbox_data, bbox_labels, bbox_scores)):
             if score < self.model_threshold:
+                continue
+
+            if label not in [0, 1]:
                 continue
 
             r, g, b = label_colors.get(label, (1.0, 1.0, 1.0))
