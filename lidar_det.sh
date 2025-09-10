@@ -1,10 +1,9 @@
 #!/bin/bash
 
-cd $HOME/ros2ws
+cd $HOME/ros2_ws
 
 echo "[1/3] Building package"
 colcon build --packages-select lidar_detector_pkg 
-colcon build --packages-select markerarraystamped
 if [  $? -eq 1 ]; then
 	echo "ERROR: Error building package. Please check"
 	exit
