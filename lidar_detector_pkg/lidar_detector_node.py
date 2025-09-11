@@ -1,14 +1,16 @@
 from time import time
 from math import sin, cos
 
+from mmdet3d.apis import LidarDet3DInferencer
+
 import rclpy
 from rclpy.node import Node
+from rclpy.qos import QoSProfile, ReliabilityPolicy
+
 from sensor_msgs.msg import PointCloud2
 from std_msgs.msg import Header, String
 from visualization_msgs.msg import Marker, MarkerArray
-from mmdet3d.apis import LidarDet3DInferencer
 import sensor_msgs_py.point_cloud2 as pc2
-from rclpy.qos import QoSProfile, ReliabilityPolicy
 
 from markerarraystamped.msg import MarkerArrayStamped
 
@@ -58,10 +60,16 @@ class LidarDetectorNode(Node):
             return None
 
         start = time()
-        results = self.inferencer({'points': points}, batch_size=1, show=False)
+        results = self.inferencer(
+                {'points': points},
+                batch_size=1,
+                show=False)
         end = time()
 
-        detections = self.create_marker_array_from_predictions(results, lidar.header.frame_id, lidar.header.stamp)
+        detections = self.create_marker_array_from_predictions(
+                results,
+                lidar.header.frame_id,
+                lidar.header.stamp)
 
         self.bbox_publisher.publish(detections)
 
@@ -80,11 +88,17 @@ class LidarDetectorNode(Node):
         header.frame_id = frame_id
         header.stamp = timestamp  # Esto es un builtin_interfaces/Time
 
+        if len(bbox_data) == 0:
+            marker_array_stamped = MarkerArrayStamped()
+            marker_array_stamped.header = header
+            marker_array_stamped.markers = marker_array
+
+            return marker_array_stamped
+
         # Colores para etiquetas
         label_colors = {
             0: (1.0, 0.0, 0.0),  # pedestrian
-            1: (0.0, 1.0, 0.0),  # cyclist
-            2: (0.0, 0.0, 1.0),  # car
+            1: (1.0, 0.0, 0.0),  # cyclist
         }
 
         for i, (bbox, label, score) in enumerate(zip(bbox_data, bbox_labels, bbox_scores)):

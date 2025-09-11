@@ -4,15 +4,15 @@ lidar_detector_node:
     model_path: '/home/user/ros2_ws/src/lidar_detector_pkg/model/pointpillars_hv_secfpn_8xb6-160e_kitti-3d-3class.py'
     weights_path: '/home/user/ros2_ws/src/lidar_detector_pkg/model/hv_pointpillars_secfpn_6x8_160e_kitti-3d-3class_20220301_150306-37dc2420.pth'
     device: 'cuda:0'
-    model_theshold: 0.5
+    model_theshold: 0.9
 
-    pointcloud_topic: '/lidar/points'
-    bounding_box_topic: '/lidar/detections'
+    pointcloud_topic: '/lidar/points'         #/sensor_msgs/msg/PointCloud2
+    bounding_box_topic: '/lidar/detections'   #/makerarraystamped/msg/MarkerArrayStamped
 
 proyection_node:
   ros__parameters:
 
     calib_topic: '/camera/calibration'
     image_input_topic: '/camera/image_raw'
-    detections_topic: '/lidar_detector/detected_bounding_boxes'
-    image_publisher_topic: '/lidar_detector/image'
+    detections_topic: '/lidar/detections'
+    image_publisher_topic: '/lidar/image'
