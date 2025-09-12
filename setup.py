@@ -10,7 +10,7 @@ setup(
         include=[
             "lidar_detector_pkg",
             "lidar_detector_pkg.*",
-            "scripts"],
+            "lidar_detector_scripts"],
         exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -29,7 +29,7 @@ setup(
     zip_safe=True,
     maintainer='user',
     maintainer_email='ernestoroque777@gmail.com',
-    description='TODO: Package description',
+    description='This package aims to create a solid lidar-based 3d detector for humans from Kitti dataset using a PointPillars DL model.',
     license='MIT',
     tests_require=['pytest'],
     entry_points={

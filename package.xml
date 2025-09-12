@@ -3,7 +3,7 @@
 <package format="3">
   <name>lidar_detector_pkg</name>
   <version>0.0.1</version>
-  <description>This package aims to create a solid lidar-only-based 3d detector for pedestrian, car and ciclyst classes from kitti dataset using a PointPillars model</description>
+  <description>This package aims to create a solid lidar-based 3d detector for humans from Kitti dataset using a PointPillars DL model.</description>
   <maintainer email="ernestoroque777@gmail.com">ernstmv</maintainer>
   <license>MIT</license>
 

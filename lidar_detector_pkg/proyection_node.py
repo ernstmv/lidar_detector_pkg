@@ -15,7 +15,7 @@ from math import cos, sin
 
 from markerarraystamped.msg import MarkerArrayStamped
 
-from scripts.proyector import Proyector
+from lidar_detector_scripts.proyector import Proyector
 
 class ProyectionNode(Node):
 
