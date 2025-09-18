@@ -24,7 +24,6 @@ setup(
         'numpy',
         'open3d',
         'mmdet3d',
-        'markerarraystamped'
         ],
     zip_safe=True,
     maintainer='user',

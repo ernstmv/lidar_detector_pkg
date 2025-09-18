@@ -13,7 +13,7 @@ from cv_bridge import CvBridge
 import numpy as np
 from math import cos, sin
 
-from markerarraystamped.msg import MarkerArrayStamped
+from custom_msgs.msg import MarkerArrayStamped
 
 from lidar_detector_scripts.proyector import Proyector
 

@@ -12,7 +12,7 @@ from std_msgs.msg import Header, String
 from visualization_msgs.msg import Marker, MarkerArray
 import sensor_msgs_py.point_cloud2 as pc2
 
-from markerarraystamped.msg import MarkerArrayStamped
+from custom_msgs.msg import MarkerArrayStamped
 
 
 class LidarDetectorNode(Node):
